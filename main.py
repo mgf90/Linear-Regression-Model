@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
 from sklearn import linear_model
+import datetime
 
 
 class main:
@@ -17,7 +17,9 @@ class main:
         print('Select the following statistics to see their correlation:\n\n'
               '1 - Completion Percentage and Yards Per Attempt\n'
               '2 - Rushing Yards Per Game and Passer Rating\n'
-              '3 - Passing Attempts Per Game and Passer Rating\n\n'
+              '3 - Passing Attempts Per Game and Passer Rating\n'
+              '4 - Predict Passer Rating\n'
+              '5 - Exit Program\n\n'
               'Enter the number corresponding to your selection: ')
 
         choice = int(input())
@@ -89,5 +91,21 @@ class main:
 
             plt.plot(x, y_predict, color='r')
             plt.show()
+
+        # elif choice == 4:
+        #
+        # elif choice == 5:
+
+        else:
+
+            print('Invalid input. Please try again')
+            file = open(r"error_log", "a+")
+            ct = datetime.datetime.now()
+            string = 'Invalid input: ' + str(choice) + ' at ' + str(ct) + '\n'
+            file.write(string)
+            file.close()
+
+
+
 
 
