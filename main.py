@@ -8,82 +8,86 @@ from sklearn import linear_model
 class main:
 
     qbs = pd.read_csv("qb_stats_2010_2021.csv")
-    # print(qbs)
-
+    exit_program = False
     print('\nWelcome to Advanced Football Analytics!\n'
-          'Using data from 2010-2021, this model can predict NFL QB passer rating\n'
-          'Select the following statistic to see its correlative relationship to passer rating:\n\n'
-          '1 - Rushing Yards\n2 - Rushing Yards Per Game\n3 - Passing Attempts Per Game\n\n'
-          'Enter the number corresponding to your selection: ')
+          'Using data from 2010-2021, this model can predict NFL QB stats\n')
 
-    choice = int(input())
+    while not exit_program:
 
-    if choice == 1:
+        print('Select the following statistics to see their correlation:\n\n'
+              '1 - Completion Percentage and Yards Per Attempt\n'
+              '2 - Rushing Yards Per Game and Passer Rating\n'
+              '3 - Passing Attempts Per Game and Passer Rating\n\n'
+              'Enter the number corresponding to your selection: ')
 
-        x = qbs['Rush_Yds'].values
-        y = qbs['Rate'].values
+        choice = int(input())
 
-        x = x.reshape(-1, 1)
-        y = y.reshape(-1, 1)
+        if choice == 1:
 
-        model = linear_model.LinearRegression()
-        model.fit(x, y)
-        y_predict = model.predict(x)
+            x = qbs['CmpP'].values
+            y = qbs['Y/A'].values
 
-        plt.scatter(x, y)
-        plt.xlabel('Career Rushing Yards')
-        plt.ylabel('Career Passer Rating')
-        plt.title('NFL QBs 2010-2021')
+            x = x.reshape(-1, 1)
+            y = y.reshape(-1, 1)
 
-        plt.plot(x, y_predict, color='r')
-        plt.show()
+            model = linear_model.LinearRegression()
+            model.fit(x, y)
+            y_predict = model.predict(x)
 
-    elif choice == 2:
+            plt.scatter(x, y)
+            plt.xlabel('Career Completion Percentage')
+            plt.ylabel('Career Yards Per Attempt')
+            plt.title('NFL QBs 2010-2021')
 
-        x = qbs['RushYardsPerGame'].values
-        y = qbs['Rate'].values
+            plt.plot(x, y_predict, color='r')
+            plt.show()
 
-        x = x.reshape(-1, 1)
-        y = y.reshape(-1, 1)
+        elif choice == 2:
 
-        model = linear_model.LinearRegression()
-        model.fit(x, y)
-        y_predict = model.predict(x)
+            x = qbs['RushYardsPerGame'].values
+            y = qbs['Rate'].values
 
-        plt.scatter(x, y)
-        plt.xlabel('Career Rushing Yards Per Game')
-        plt.ylabel('Career Passer Rating')
-        plt.title('NFL QBs 2010-2021')
+            x = x.reshape(-1, 1)
+            y = y.reshape(-1, 1)
 
-        plt.plot(x, y_predict, color='r')
-        plt.show()
+            model = linear_model.LinearRegression()
+            model.fit(x, y)
+            y_predict = model.predict(x)
 
-    if choice == 3:
+            plt.scatter(x, y)
+            plt.xlabel('Career Rushing Yards Per Game')
+            plt.ylabel('Career Passer Rating')
+            plt.title('NFL QBs 2010-2021')
 
-        x = qbs['Pass_Att'].values
-        g = qbs['G'].values
-        apg = []
+            plt.plot(x, y_predict, color='r')
+            plt.show()
 
-        for i in range(0, len(x)):
-            apg.append(x[i] / g[i])
+        if choice == 3:
 
-        x = apg
-        x = np.array(x)
-        y = qbs['Rate'].values
+            x = qbs['Pass_Att'].values
+            g = qbs['G'].values
+            apg = []
 
-        x = x.reshape(-1, 1)
-        y = y.reshape(-1, 1)
+            for i in range(0, len(x)):
+                apg.append(x[i] / g[i])
 
-        model = linear_model.LinearRegression()
-        model.fit(x, y)
-        y_predict = model.predict(x)
+            x = apg
+            x = np.array(x)
+            y = qbs['Rate'].values
 
-        plt.scatter(x, y)
-        plt.xlabel('Career Passing Attempts Per Game')
-        plt.ylabel('Career Passer Rating')
-        plt.title('NFL QBs 2010-2021')
+            x = x.reshape(-1, 1)
+            y = y.reshape(-1, 1)
 
-        plt.plot(x, y_predict, color='r')
-        plt.show()
+            model = linear_model.LinearRegression()
+            model.fit(x, y)
+            y_predict = model.predict(x)
+
+            plt.scatter(x, y)
+            plt.xlabel('Career Passing Attempts Per Game')
+            plt.ylabel('Career Passer Rating')
+            plt.title('NFL QBs 2010-2021')
+
+            plt.plot(x, y_predict, color='r')
+            plt.show()
 
 
